@@ -18,12 +18,13 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
+print(BASE_DIR)
 
 DEBUG = True
 
 
 # Application definition
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -35,8 +36,9 @@ INSTALLED_APPS = [
     # External Packages
     "corsheaders",
     "rest_framework.authtoken",
-    "rest_framework"
+    "rest_framework",
     # Internal Apps
+    "apps.product",
 ]
 
 MIDDLEWARE = [
