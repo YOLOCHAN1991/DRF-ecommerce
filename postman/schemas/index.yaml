@@ -1,0 +1,59 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/category/:
+    get:
+      operationId: listCategorys
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createCategory
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
+  /api/category/{id}/:
+    get:
+      operationId: retrieveCategory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this category.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
