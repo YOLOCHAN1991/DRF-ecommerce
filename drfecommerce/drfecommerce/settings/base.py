@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "rest_framework",
     "drf_spectacular",
+    "coverage",
+    "pytest",
     # Internal Apps
     "apps.product",
 ]
@@ -134,5 +136,5 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "drfecommerce API",
     "DESCRIPTION": "API for drfecommerce",
     "VERSION": "1.0.0",
-    "SCHEMA_PATH_PREFIX": "/api/v1",
+    "SCHEMA_PATH_PREFIX": "/api/",
 }

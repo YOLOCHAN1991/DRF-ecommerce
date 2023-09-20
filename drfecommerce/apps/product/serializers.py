@@ -12,7 +12,10 @@ class CategorySerializer(serializers.ModelSerializer):
 class CategoryNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ("name",)
+        fields = (
+            "id",
+            "name",
+        )
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -22,6 +25,9 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    brand = BrandSerializer()
+    category = CategoryNameSerializer()
+
     class Meta:
         model = Product
         fields = "__all__"

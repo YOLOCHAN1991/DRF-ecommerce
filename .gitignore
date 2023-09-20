@@ -5,4 +5,5 @@ db.sqlite3
 .env
 .vscode
 .coverage
+htmlcov/
 schema.yml
