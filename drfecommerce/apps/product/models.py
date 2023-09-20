@@ -5,7 +5,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     parent = TreeForeignKey(
         "self",
         on_delete=models.PROTECT,
@@ -28,7 +28,7 @@ class Brand(models.Model):
         return self.name
 
 
-class Product(MPTTModel):
+class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     is_digital = models.BooleanField(default=False)
@@ -36,9 +36,6 @@ class Product(MPTTModel):
     category = TreeForeignKey(
         "Category", null=True, blank=True, on_delete=models.SET_NULL
     )
-
-    class MPTTMeta:
-        parent_attr = 'category'
 
     def __str__(self):
         return self.name

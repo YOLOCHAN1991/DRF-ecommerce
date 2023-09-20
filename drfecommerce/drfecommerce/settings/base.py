@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework.authtoken",
     "rest_framework",
+    "drf_spectacular",
+    "coverage",
+    "pytest",
     # Internal Apps
     "apps.product",
 ]
@@ -124,3 +127,14 @@ REST_FRAMEWORK = {
     ]
 }
 """
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "drfecommerce API",
+    "DESCRIPTION": "API for drfecommerce",
+    "VERSION": "1.0.0",
+    "SCHEMA_PATH_PREFIX": "/api/",
+}
