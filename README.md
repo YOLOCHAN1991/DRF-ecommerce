@@ -1,12 +1,32 @@
 # DRF-ecommerce
 A Django REST project with DRF
 
-solo necesitas instalar las dependencias en requirements.txt con pip install -r requirements.txt
-Meterte a la carpeta del proyecto
+
+# Instalar dependencias
+```
+pip install -r requirements.txt
+```
+# En el mismo folder que se encuentra manage.py:
 # Commands
 usar python manage.py makemigrations
+
+## Hacer migraciones
+```
+python manage.py makemigrations
+```
+## Migrar trablas
+```
 python manage.py migrate
-y python manage.py runserver para empezar a correr el servidor
-deberas crear una base de datos por el nombre ecommerce o configurar una en las sys variables.
+```
+## Empezar server
+```
+python manage.py runserver
+```
+
+Deberas crear una base de datos por el nombre ecommerce o configurar una en las sys variables.
 si quieren cambien la configuracion de la bd a su sqlite o a su gusto.
 
+# Una vez iniciado el server puede ver la **documentacion** en la ruta :
+```
+api/schema/docs
+```
