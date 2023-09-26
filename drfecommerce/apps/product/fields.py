@@ -46,7 +46,7 @@ class OrderField(models.PositiveIntegerField):
                             model_instance, self.unique_for_field
                         )
                     }
-                )
+                ).exclude(pk=model_instance.pk)
                 last_item = qs.latest(self.attname)
                 print(last_item)
                 value = last_item.order + 1

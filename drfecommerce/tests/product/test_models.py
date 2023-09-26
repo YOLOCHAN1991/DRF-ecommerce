@@ -53,4 +53,23 @@ class TestProductLineModel:
         # Act
         with pytest.raises(ValidationError):
             product_line_factory(product=product, order=1).clean()
-            
+
+
+class TestProductImageModel:
+    def test_str(self, product_image_factory):
+        # Arrange
+        name = product_image_factory(url_image="prueba3")
+        # Act
+        result = str(name)
+        # Assert
+        assert result == "prueba3"
+
+    def test_duplicate_order_values(self, product_image_factory, product_line_factory):
+        # Arrange
+        product_line = product_line_factory()
+        product_image_factory(productline=product_line, order=1)
+        product_image_factory(productline=product_line, order=2)
+
+        # Act
+        with pytest.raises(ValidationError):
+            product_image_factory(productline=product_line, order=2).clean()
