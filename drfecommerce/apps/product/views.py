@@ -1,4 +1,5 @@
-# from django.db import connection
+from django.db import connection
+from django.db.models import Prefetch
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -18,7 +19,6 @@ from .serializers import (  # noqa
 class CategoryViewSet(viewsets.ViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    
 
     @extend_schema(responses={200: CategorySerializer(many=True)})
     def list(self, request):
@@ -72,10 +72,15 @@ class ProductViewSet(viewsets.ModelViewSet):
         """Retrieve a product"""
         # product = generics.get_object_or_404(self.queryset, slug=slug)
         serializer = ProductSerializer(
-            self.queryset.filter(slug=slug).select_related("category", "brand"),
+            self.queryset.filter(slug=slug)
+            .select_related("category", "brand")
+            .prefetch_related(Prefetch("product_line"))
+            .prefetch_related(Prefetch("product_line__product_image")),
             many=True,
         )
+
         data = Response(serializer.data)
+        print(len(connection.queries))
         return data
 
     @action(
