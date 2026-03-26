@@ -53,10 +53,22 @@ class Product(models.Model):
         "Category", null=True, blank=True, on_delete=models.SET_NULL
     )
     is_active = models.BooleanField(default=False)
-    objects = ActiveQueryset().as_manager()
+    objects = ActiveQueryset.as_manager()
 
     def __str__(self):
         return self.name
+
+
+class Atribute(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+
+
+class AtributeValue(models.Model):
+    attribute_value = models.CharField(max_length=100)
+    attribute = models.ForeignKey(
+        Atribute, on_delete=models.CASCADE, related_name="attribute_value"
+    )
 
 
 class ProductLine(models.Model):
@@ -68,6 +80,9 @@ class ProductLine(models.Model):
     )
     is_active = models.BooleanField(default=False)
     order = OrderField(unique_for_field="product", blank=True)
+    attribute_value = models.ManyToManyField(
+        AtributeValue, through="ProductLineAttributeValue"
+    )
     objects = ActiveQueryset().as_manager()
 
     def clean(self, exclude: Collection[str] | None = ...) -> None:
@@ -88,6 +103,20 @@ class ProductLine(models.Model):
 
     def __str__(self):
         return str(self.sku)
+
+
+class ProductLineAttributeValue(models.Model):
+    attribute_value = models.ForeignKey(
+        AtributeValue,
+        on_delete=models.CASCADE,
+        related_name="product_attribute_value_av",
+    )
+    product_line = models.ForeignKey(
+        ProductLine, on_delete=models.CASCADE, related_name="product_attribute_value_pl"
+    )
+
+    class Meta:
+        unique_together = ("attribute_value", "product_line")
 
 
 class ProductImage(models.Model):
