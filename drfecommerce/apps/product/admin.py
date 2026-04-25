@@ -2,7 +2,15 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from .models import Category, Brand, Product, ProductLine, ProductImage
+from .models import (
+    Category,
+    Brand,
+    Product,
+    ProductLine,
+    ProductImage,
+    AttributeValue,
+    Attribute,
+)
 
 
 class EditLinkInline(object):
@@ -24,13 +32,6 @@ class ProductImageInline(admin.TabularInline):
     extra = 0
 
 
-@admin.register(ProductLine)
-class ProductLineAdmin(admin.ModelAdmin):
-    inlines = [
-        ProductImageInline,
-    ]
-
-
 class ProductLineInline(EditLinkInline, admin.TabularInline):
     model = ProductLine
     readonly_fields = ["edit"]
@@ -41,8 +42,19 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductLineInline]
 
 
+class AttributeValueInline(admin.TabularInline):
+    model = AttributeValue.product_line_attribute_value.through
+
+
+@admin.register(ProductLine)
+class ProductLineAdmin(admin.ModelAdmin):
+    inlines = [ProductImageInline, AttributeValueInline]
+
+
 # Register your models here.
 
 admin.site.register(Brand)
 admin.site.register(Category)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Attribute)
+admin.site.register(AttributeValue)

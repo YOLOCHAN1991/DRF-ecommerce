@@ -59,17 +59,24 @@ class Product(models.Model):
         return self.name
 
 
-class Atribute(models.Model):
+class Attribute(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    
+    def __str__(self):
+        return str(self.name)
 
 
-class AtributeValue(models.Model):
+class AttributeValue(models.Model):
     attribute_value = models.CharField(max_length=100)
     attribute = models.ForeignKey(
-        Atribute, on_delete=models.CASCADE, related_name="attribute_value"
+        Attribute, on_delete=models.CASCADE, related_name="attribute_value"
     )
 
+    def __str__(self):
+        return self.attribute_value
+
+ 
 
 class ProductLine(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
@@ -81,7 +88,7 @@ class ProductLine(models.Model):
     is_active = models.BooleanField(default=False)
     order = OrderField(unique_for_field="product", blank=True)
     attribute_value = models.ManyToManyField(
-        AtributeValue, through="ProductLineAttributeValue"
+        AttributeValue, through="ProductLineAttributeValue", related_name="product_line_attribute_value"
     )
     objects = ActiveQueryset().as_manager()
 
@@ -107,7 +114,7 @@ class ProductLine(models.Model):
 
 class ProductLineAttributeValue(models.Model):
     attribute_value = models.ForeignKey(
-        AtributeValue,
+        AttributeValue,
         on_delete=models.CASCADE,
         related_name="product_attribute_value_av",
     )
